@@ -2,10 +2,7 @@ body{
   text-align: center;
 }
 
-th{
-  border: 1px solid #000;
-  width:10%;
-}
+
 
 h1.title{
   text-align: center;
@@ -25,3 +22,13 @@ h1.title{
   color:red;
 }
 
+input.done{
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+th{
+  border: 1px solid #000;
+  width:10%;
+  text-align: center;
+}

@@ -4,23 +4,23 @@ function init(){
   console.log("here");
   var tasks = getTasks();
   console.log("tasks: " , tasks);
-  //renderDescriptions(descriptions);
-  //renderDates(dates);
   renderTasks(tasks);
-  //var dates = getDates();
-  //renderDates(dates);
+  console.log(tasks);
 
   $('.addNewTask').on('click', newTask);
   $('.submitTask').on('click', submitTask);
-  $('[type = checkbox]').on ('change', taskCheck);
+  $('.Done').on('click', taskCheck);
   $('.toDoList').on('click', '#delete', deleteTask);
   $('.toDoList').on('click', '#edit', editTask);
   $('.newTask').on('click', '.editTask', submitEdit);
   $('.cancelTask').on('click', cancelTask);
   $('.cancelAddTask').on('click', cancelTask);
   $('#deleteAll').on('click', deleteAllTasks);
+
   //$('.toDoList').on('checked', '.Done', taskDone);
   $('.cancelAddTask').hide();
+  $('#deleteAllCompleted').on('click', deleteAllCompleted);
+
 }
 
 function newTask(){
@@ -41,6 +41,7 @@ function submitTask(){
   var tasks = getTasks(); // read, parse
   tasks.push(task);
   writeTasks(tasks);
+  //var ntasks = getTasks();
   renderTasks(tasks);
 }
 
@@ -52,7 +53,9 @@ function getTasks(){
   catch(err){
     var tasks = [];
   }
+  console.log("tasks at try catch: ", tasks);
   return tasks;
+
 }
 
 //write to storage
@@ -69,7 +72,7 @@ function renderTasks(tasks){
   desc = task['description'];
   dte = task['date'];
   dne = task['done'];
-  console.log(dne);
+  console.log("done ar render:?" ,dne);
   $li.find('.Description').text(desc);
   $li.find('.Date').text(dte);
   $li.find('.Done').prop('checked', dne);
@@ -77,16 +80,19 @@ function renderTasks(tasks){
   return $li;
  });
   $('.toDoList').empty().append($lis);
+
 }
 
 //set data to true
 function taskCheck(){
+  console.log("HERE");
   var tasks = getTasks();
   var index = ($(this).parent().parent().parent().parent().index());
   var task = tasks[index];
   task['done'] = ($(this).prop( "checked" ));
   writeTasks(tasks);
-  renderTasks(tasks);
+  var newTasks = getTasks()
+  renderTasks(newTasks);
 }
 
 function deleteTask(){
@@ -154,6 +160,16 @@ function deleteAllTasks(){
   cancelTask();
 }
 
+function deleteAllCompleted(){
+  var tasks = getTasks();
+  var size = tasks.length;
+  
+  /*console.log(size);
+  tasks.splice(0,size);
+  writeTasks(tasks);
+  renderTasks(tasks);
+  cancelTask();*/
+}
 
 
 
