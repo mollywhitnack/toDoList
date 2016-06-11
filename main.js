@@ -1,3 +1,4 @@
+'use strict'
 $(document).ready(init); 
 
 function init(){
@@ -18,6 +19,8 @@ function init(){
   $('.cancelAddTask').on('click', cancelTask);
   $('#deleteAll').on('click', deleteAllTasks);
   $('#deleteAllCompleted').on('click', deleteAllCompleted);
+  $('.sort').on('click', sort);
+  $('.reverseSort').on('click', reverseSort);
 
 }
 
@@ -26,11 +29,15 @@ function newTask(){
   $('.editTask').hide();
   $('.cancelTask').hide();
   $('.cancelAddTask').show();
-  $('.submitTask.').show();
+  $('.submitTask').show();
+  $('.addNewTask').hide();
+  $(this).parent().find('.descriptionInput').val('');
+  $(this).parent().find('.dueDateInput').val('');
 }
 
 function submitTask(){
   $('.newTask').hide();
+  $('.addNewTask').show();
   var description = $('.descriptionInput').val();
   $('.descriptionInput').val('');
   var date = $('.dueDateInput').val();
@@ -66,9 +73,9 @@ function writeTasks(tasks){
 function renderTasks(tasks){
  var $lis = tasks.map(task => {
   var $li = $('.template').clone(); 
-  desc = task['description'];
-  dte = task['date'];
-  dne = task['done'];
+  var desc = task['description'];
+  var dte = task['date'];
+  var dne = task['done'];
   $li.find('.Description').text(desc);
   $li.find('.Date').text(dte);
   $li.find('.Done').prop('checked', dne);
@@ -95,6 +102,7 @@ function taskCheck(){
 function deleteTask(){
   //console.log('click!');
   //cancelEdit();
+  cancelTask();
   var tasks = getTasks();
   var index = $(this).parent().parent().parent().parent().index();
   tasks.splice(index, 1);
@@ -143,7 +151,6 @@ function cancelTask(){
 }
 
 function deleteAllTasks(){
-
   var tasks = getTasks();
   var size = tasks.length;
   tasks.splice(0,size);
@@ -154,19 +161,17 @@ function deleteAllTasks(){
 
 function deleteAllCompleted(){
   var tasks = getTasks();
-  var size = tasks.length;
   var indexs = [];
   console.log("delete index:" , $('.Done').data('deleteIndex'));
-  for(var i =0; i< size; i++){
+  for(var i =0; i< tasks.length; i++){
     var task = tasks[i];
     if(task['done'] === true){
       indexs.push(i);
     }
   }
    var newTasks = removeChecked(indexs, tasks)
-
-  writeTasks(newTasks);
-  renderTasks(newTasks);
+   writeTasks(newTasks);
+   renderTasks(newTasks);
 }
 
 function removeChecked(indexs, tasks){
@@ -175,6 +180,15 @@ function removeChecked(indexs, tasks){
   });
 
   return arr;
+}
+
+function sort(){
+  console.log("sort");
+}
+
+function reverseSort(){
+  console.log("reverse sort");
+
 }
 
 
