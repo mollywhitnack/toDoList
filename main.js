@@ -1,24 +1,22 @@
 $(document).ready(init); 
 
 function init(){
+
   console.log("here");
   var tasks = getTasks();
   console.log("tasks: " , tasks);
   renderTasks(tasks);
-  console.log(tasks);
-
+  //console.log(tasks);
+  $('.cancelAddTask').hide();
   $('.addNewTask').on('click', newTask);
   $('.submitTask').on('click', submitTask);
-  $('.Done').on('click', taskCheck);
+  $('.toDoList').on('click', '.Done',  taskCheck);
   $('.toDoList').on('click', '#delete', deleteTask);
   $('.toDoList').on('click', '#edit', editTask);
   $('.newTask').on('click', '.editTask', submitEdit);
   $('.cancelTask').on('click', cancelTask);
   $('.cancelAddTask').on('click', cancelTask);
   $('#deleteAll').on('click', deleteAllTasks);
-
-  //$('.toDoList').on('checked', '.Done', taskDone);
-  $('.cancelAddTask').hide();
   $('#deleteAllCompleted').on('click', deleteAllCompleted);
 
 }
@@ -28,6 +26,7 @@ function newTask(){
   $('.editTask').hide();
   $('.cancelTask').hide();
   $('.cancelAddTask').show();
+  $('.submitTask.').show();
 }
 
 function submitTask(){
@@ -53,7 +52,6 @@ function getTasks(){
   catch(err){
     var tasks = [];
   }
-  console.log("tasks at try catch: ", tasks);
   return tasks;
 
 }
@@ -66,13 +64,11 @@ function writeTasks(tasks){
 
 
 function renderTasks(tasks){
- console.log("tasks: " , tasks[0]);
  var $lis = tasks.map(task => {
   var $li = $('.template').clone(); 
   desc = task['description'];
   dte = task['date'];
   dne = task['done'];
-  console.log("done ar render:?" ,dne);
   $li.find('.Description').text(desc);
   $li.find('.Date').text(dte);
   $li.find('.Done').prop('checked', dne);
@@ -80,12 +76,11 @@ function renderTasks(tasks){
   return $li;
  });
   $('.toDoList').empty().append($lis);
-
 }
 
 //set data to true
 function taskCheck(){
-  console.log("HERE");
+  console.log("Check box clicked");
   var tasks = getTasks();
   var index = ($(this).parent().parent().parent().parent().index());
   var task = tasks[index];
@@ -93,6 +88,8 @@ function taskCheck(){
   writeTasks(tasks);
   var newTasks = getTasks()
   renderTasks(newTasks);
+  console.log("checked index: " ,index, " set at ", $('.toDoList'));
+  //$('.toDoList').data('deleteIndex', index);
 }
 
 function deleteTask(){
@@ -100,9 +97,8 @@ function deleteTask(){
   //cancelEdit();
   var tasks = getTasks();
   var index = $(this).parent().parent().parent().parent().index();
-  console.log(tasks[index]);
   tasks.splice(index, 1);
-  console.log(tasks);
+  //console.log(tasks);
   writeTasks(tasks);
   renderTasks(tasks);
 }
@@ -114,10 +110,10 @@ function editTask(){
   $('.cancelTask').show();
   $('.cancelAddTask').hide();
   $('.addNewTask').hide();
-  console.log($(this))//.parent().parent().parent().parent())
+  //console.log($(this))//.parent().parent().parent().parent())
   var description = $(this).parent().parent().parent().parent().find(".Description").text();
   var date = $(this).parent().parent().parent().parent().find(".Date").text();
-  console.log(description);
+  //console.log(description);
   $('.descriptionInput').val(description);
   $('.dueDateInput').val(date);
   var index = $(this).parent().parent().parent().parent().index();
@@ -130,11 +126,7 @@ function submitEdit(){
   var description = $(this).parent().find('.descriptionInput').val();
   var date = $(this).parent().find('.dueDateInput').val();
   var index =  $('.newTask').data('editIndex');
-  console.log(description);
-  console.log(date);
-  console.log("edit: " , index );
   var tasks = getTasks();
-  console.log(tasks[index]);
   task =tasks[index];
   task['description'] = description;
   task['date'] = date;
@@ -146,6 +138,7 @@ function submitEdit(){
 
 function cancelTask(){
   $('.newTask').hide();
+  $('.cancelAddTask').hide();
   $('.addNewTask').show();
 }
 
@@ -153,7 +146,6 @@ function deleteAllTasks(){
 
   var tasks = getTasks();
   var size = tasks.length;
-  console.log(size);
   tasks.splice(0,size);
   writeTasks(tasks);
   renderTasks(tasks);
@@ -163,12 +155,26 @@ function deleteAllTasks(){
 function deleteAllCompleted(){
   var tasks = getTasks();
   var size = tasks.length;
-  
-  /*console.log(size);
-  tasks.splice(0,size);
-  writeTasks(tasks);
-  renderTasks(tasks);
-  cancelTask();*/
+  var indexs = [];
+  console.log("delete index:" , $('.Done').data('deleteIndex'));
+  for(var i =0; i< size; i++){
+    var task = tasks[i];
+    if(task['done'] === true){
+      indexs.push(i);
+    }
+  }
+   var newTasks = removeChecked(indexs, tasks)
+
+  writeTasks(newTasks);
+  renderTasks(newTasks);
+}
+
+function removeChecked(indexs, tasks){
+  var arr = $.grep(tasks, function(n, i) {
+      return $.inArray(i, indexs) ==-1;
+  });
+
+  return arr;
 }
 
 
