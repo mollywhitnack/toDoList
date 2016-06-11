@@ -19,8 +19,12 @@ function init(){
   $('.cancelAddTask').on('click', cancelTask);
   $('#deleteAll').on('click', deleteAllTasks);
   $('#deleteAllCompleted').on('click', deleteAllCompleted);
-  $('.sort').on('click', sort);
-  $('.reverseSort').on('click', reverseSort);
+  $('.sortDescription').on('click', sortDescription);
+  $('.reverseSortDescription').on('click', reverseSortDescription);
+  $('.sortDate').on('click', sortDate);
+  $('.reverseSortDate').on('click', reverseSortDate);
+  $('.sortDone').on('click', sortDone);
+  $('.reverseSortDone').on('click', reverseSortDone);
 
 }
 
@@ -182,14 +186,43 @@ function removeChecked(indexs, tasks){
   return arr;
 }
 
-function sort(){
-  console.log("sort");
+function sortDescription(){
+  console.log("sort description");
+  var tasks = getTasks();
 }
 
-function reverseSort(){
-  console.log("reverse sort");
+function reverseSortDescription(){
+  console.log("reverse sort description");
 
 }
+
+function sortDate(){
+  console.log("sort date");
+}
+
+function reverseSortDate(){
+  console.log("reverse sort date");
+
+}
+
+function sortDone(){
+  console.log("sort done");
+}
+
+function reverseSortDone(){
+  console.log("reverse sort done");
+
+}
+
+function compare(a,b) {
+  if (a.last_nom < b.last_nom)
+    return -1;
+  else if (a.last_nom > b.last_nom)
+    return 1;
+  else 
+    return 0;
+}
+
 
 
 
