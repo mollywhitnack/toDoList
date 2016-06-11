@@ -1,0 +1,13 @@
+th{
+  border: 1px solid #000;
+  width: 250px;
+}
+
+.template, .newTask {
+  display: none;
+}
+
+.template{
+  color:red;
+}
+

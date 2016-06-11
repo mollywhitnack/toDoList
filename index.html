@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>To Do List</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <script src="http://code.jquery.com/jquery-3.0.0.min.js"></script>
+  <script src="main.js"></script>
+</head>
+<body>
+
+<h1>To Do List</h1>
+<div class="tableArea">
+<table class = "toDo">
+  <thead>
+    <tr>
+      <th>Description</th>
+      <th>Due Date</th>
+      <th>Done</th>
+    </tr>
+  </thead>
+</table>
+<div class = "toDoList">
+</div>
+</div>
+
+<table class = "template">
+  <tr>
+   <th class = "Description"></th>
+   <th class = "Date"></th>
+   <th><input type="checkbox" class="Done"> 
+   <button type="button" id = "delete" class="btn btn-sm btn-danger">Delete</button>
+   <button type="button" id = "edit" class="btn btn-sm btn-info">Edit</button></th>
+  </tr>
+</table>
+
+<div class="newTask">
+  <input type="text" class = "descriptionInput">
+  <input type="date" class = "dueDateInput">
+  <button class = "submitTask">Submit Task</button>
+  <button class = "editTask">Edit Task</button>
+  <button class = "cancelTask">Cancel</button>
+</div>
+
+<button class="addNewTask">Add New Item</button>
+
+
+
+
+  
+</body>
+</html>
