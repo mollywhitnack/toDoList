@@ -1,8 +1,22 @@
-th{
-  border: 1px solid #000;
-  width: 250px;
+body{
+  text-align: center;
 }
 
+th{
+  border: 1px solid #000;
+  width:10%;
+}
+
+h1.title{
+  text-align: center;
+  background-color: none;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.tableArea{
+
+}
 .template, .newTask {
   display: none;
 }

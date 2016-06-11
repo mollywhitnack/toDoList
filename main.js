@@ -16,13 +16,18 @@ function init(){
   $('.toDoList').on('click', '#delete', deleteTask);
   $('.toDoList').on('click', '#edit', editTask);
   $('.newTask').on('click', '.editTask', submitEdit);
+  $('.cancelTask').on('click', cancelTask);
+  $('.cancelAddTask').on('click', cancelTask);
+  $('#deleteAll').on('click', deleteAllTasks);
   //$('.toDoList').on('checked', '.Done', taskDone);
+  $('.cancelAddTask').hide();
 }
 
 function newTask(){
   $('.newTask').show();
   $('.editTask').hide();
   $('.cancelTask').hide();
+  $('.cancelAddTask').show();
 }
 
 function submitTask(){
@@ -101,6 +106,8 @@ function editTask(){
   $('.editTask').show();
   $('.submitTask').hide();
   $('.cancelTask').show();
+  $('.cancelAddTask').hide();
+  $('.addNewTask').hide();
   console.log($(this))//.parent().parent().parent().parent())
   var description = $(this).parent().parent().parent().parent().find(".Description").text();
   var date = $(this).parent().parent().parent().parent().find(".Date").text();
@@ -108,22 +115,43 @@ function editTask(){
   $('.descriptionInput').val(description);
   $('.dueDateInput').val(date);
   var index = $(this).parent().parent().parent().parent().index();
-  console.log("ind: " , index);
-  //$('.editArea').data('editIndex', index);
+  //console.log("ind: " , index);
+  $('.newTask').data('editIndex', index);
 }
 
 function submitEdit(){
+
   var description = $(this).parent().find('.descriptionInput').val();
   var date = $(this).parent().find('.dueDateInput').val();
   var index =  $('.newTask').data('editIndex');
   console.log(description);
   console.log(date);
+  console.log("edit: " , index );
   var tasks = getTasks();
+  console.log(tasks[index]);
+  task =tasks[index];
+  task['description'] = description;
+  task['date'] = date;
+  writeTasks(tasks);
+  renderTasks(tasks);
+  cancelTask();
 
-  /*tasks.splice(index, 1, name);
-  writeNames(names);  
-  renderNames(names); 
-  cancelEdit();*/
+}
+
+function cancelTask(){
+  $('.newTask').hide();
+  $('.addNewTask').show();
+}
+
+function deleteAllTasks(){
+
+  var tasks = getTasks();
+  var size = tasks.length;
+  console.log(size);
+  tasks.splice(0,size);
+  writeTasks(tasks);
+  renderTasks(tasks);
+  cancelTask();
 }
 
 
