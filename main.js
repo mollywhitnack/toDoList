@@ -37,6 +37,7 @@ function newTask(){
   $('.addNewTask').hide();
   $(this).parent().find('.descriptionInput').val('');
   $(this).parent().find('.dueDateInput').val('');
+  $('.dueDateInput').val(new Date().toDateInputValue());
 }
 
 function submitTask(){
@@ -134,18 +135,16 @@ function editTask(){
 }
 
 function submitEdit(){
-
   var description = $(this).parent().find('.descriptionInput').val();
   var date = $(this).parent().find('.dueDateInput').val();
   var index =  $('.newTask').data('editIndex');
   var tasks = getTasks();
-  task =tasks[index];
+  var task =tasks[index];
   task['description'] = description;
   task['date'] = date;
   writeTasks(tasks);
   renderTasks(tasks);
   cancelTask();
-
 }
 
 function cancelTask(){
@@ -189,39 +188,90 @@ function removeChecked(indexs, tasks){
 function sortDescription(){
   console.log("sort description");
   var tasks = getTasks();
+
+ tasks.sort(function(a, b){
+   var descA=a.description.toLowerCase(), descB=b.description.toLowerCase()
+     if (descA < descB) //sort string ascending
+       return -1 
+     if (descA > descB)
+       return 1
+     return 0 //default return value (no sorting)
+  })
+  //console.log("sorted: " , tasks);  
+  writeTasks(tasks);
+  renderTasks(tasks);
 }
 
 function reverseSortDescription(){
   console.log("reverse sort description");
+    console.log("sort description");
+    var tasks = getTasks();
+
+ tasks.sort(function(a, b){
+   var descA=a.description.toLowerCase(), descB=b.description.toLowerCase()
+     if (descA > descB) //sort string ascending
+       return -1 
+     if (descA < descB)
+       return 1
+     return 0 //default return value (no sorting)
+  })
+  //console.log("sorted: " , tasks);  
+  writeTasks(tasks);
+  renderTasks(tasks);
 
 }
 
 function sortDate(){
   console.log("sort date");
+  var tasks = getTasks();
+  tasks.sort(function(a, b){
+   var dateA=new Date(a.date), dateB=new Date(b.date)
+   return dateA-dateB //sort by date ascending
+  })
+  writeTasks(tasks);
+  renderTasks(tasks);
 }
 
 function reverseSortDate(){
   console.log("reverse sort date");
+   console.log("sort date");
+  var tasks = getTasks();
+  tasks.sort(function(a, b){
+   var dateA=new Date(a.date), dateB=new Date(b.date)
+   return dateB-dateA //sort by date ascending
+  })
+  writeTasks(tasks);
+  renderTasks(tasks);
 
 }
 
 function sortDone(){
   console.log("sort done");
+   var tasks = getTasks();
+   tasks.sort(function(a, b){
+   return a.done-b.done
+   })
+   writeTasks(tasks);
+  renderTasks(tasks);
 }
 
 function reverseSortDone(){
   console.log("reverse sort done");
-
+  //console.log("sort done");
+   var tasks = getTasks();
+   tasks.sort(function(a, b){
+   return b.done-a.done
+   })
+   writeTasks(tasks);
+   renderTasks(tasks);
 }
 
-function compare(a,b) {
-  if (a.last_nom < b.last_nom)
-    return -1;
-  else if (a.last_nom > b.last_nom)
-    return 1;
-  else 
-    return 0;
-}
+
+Date.prototype.toDateInputValue = (function() {
+    var local = new Date(this);
+    local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+    return local.toJSON().slice(0,10);
+});
 
 
 
