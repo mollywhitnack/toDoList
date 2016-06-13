@@ -1,6 +1,8 @@
 'use strict'
 $(document).ready(init); 
 
+var letters = '';
+
 function init(){
 
   console.log("here");
@@ -25,6 +27,7 @@ function init(){
   $('.reverseSortDate').on('click', reverseSortDate);
   $('.sortDone').on('click', sortDone);
   $('.reverseSortDone').on('click', reverseSortDone);
+  $('.filter').keyup(filter);
 
 }
 
@@ -273,6 +276,28 @@ Date.prototype.toDateInputValue = (function() {
     return local.toJSON().slice(0,10);
 });
 
+//65 =a ,z=90
+function filter(event){
+  var num = event.which;
+  var c = String.fromCharCode(event.which);
+  var tasks = getTasks();
+  var nTasks = [];
+  if(num === 8){
+    letters = letters.substring(0, letters.length-1);
+  }  
+  else
+    letters += c;
+
+  for(let i =0; i < tasks.length; i++){
+    var description = tasks[i].description
+    description = description.toLowerCase();
+    letters = letters.toLowerCase();
+    if(letters === description.substring(0, letters.length)){
+       nTasks.push(tasks[i]);
+    }
+  }
+   renderTasks(nTasks);
+}
 
 
 

@@ -1,6 +1,6 @@
 body{
   text-align: center;
-}
+ }
 
 
 h1.title{
@@ -22,7 +22,8 @@ width: 200px
 }
 
 .tableArea{
-
+  margin-left: 17%;
+  margin-right: 17%;
 }
 .template, .newTask {
   display: none;
@@ -76,14 +77,43 @@ button.addNewTask{
     background-color: white;
 
 }
-
+.filter{
+  width:130px;
+}
 
 input[type=checkbox], input[type=radio] {
     margin-left: 6%;
     margin-right: 27%;
 }
 
+@media (max-width: 1196px){
+  .tableArea{
+    margin-left:10%
+  }
+}
 
+@media (max-width: 992px){
+  th{
+    width:200px;
+  }
+  input[type=checkbox], input[type=radio] {
+    margin-left: 1%;
+    margin-right: 5%;
+  }
+}
+@media (max-width: 738px){
+  th{
+    width:160px;
+  }
+  input[type=checkbox], input[type=radio] {
+    margin-left: 1%;
+    margin-right: 2px;
+  }
+  .btn-group-sm>.btn, .btn-sm{
+  line-height: 0.8;
+  margin-left: 2%;
+  }
+}
 
 
 
