@@ -40,14 +40,15 @@ input.done{
 th{
   border: 1px solid #000;
   width:300px;
-  text-align: center;
   padding-bottom: 10px;
   padding-top: 10px;
+  padding-left: 10px;
 
 }
 
 .btn-group-sm>.btn, .btn-sm{
   line-height: 1;
+  margin-left: 10%;
 }
 
 .toDo{
@@ -77,7 +78,10 @@ button.addNewTask{
 }
 
 
-
+input[type=checkbox], input[type=radio] {
+    margin-left: 6%;
+    margin-right: 27%;
+}
 
 
 
